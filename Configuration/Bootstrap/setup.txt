@@ -1,0 +1,16 @@
+page.includeJS.5390725920 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/boostrap-transition.js
+page.includeJS.5390725921 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/bootstrap-alert.js
+page.includeJS.5390725922 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/bootstrap-button.js
+page.includeJS.5390725923 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/bootstrap-carousel.js
+page.includeJS.5390725924 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/bootstrap-collapse.js
+page.includeJS.5390725925 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/bootstrap-dropdown.js
+page.includeJS.5390725926 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/bootstrap-modal.js
+page.includeJS.5390725927 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/bootstrap-tooltip.js
+page.includeJS.5390725928 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/bootstrap-popover.js
+page.includeJS.5390725929 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/bootstrap-scrollspy.js
+page.includeJS.5390725930 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/bootstrap-tab.js
+page.includeJS.5390725931 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/bootstrap-tooltip.js
+page.includeJS.5390725932 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/bootstrap-typeahead.js
+page.includeJS.5390725933 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/widgets.js
+
+page.includeCSS.5390725920 = EXT:fluidwidget/Resources/Public/Stylesheets/Bootstrap.css

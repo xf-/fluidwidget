@@ -1,0 +1,7 @@
+plugin.tx_fluidwidget {
+	view {
+		templateRootPath = {$plugin.tx_fluidwidget.view.templateRootPath}
+		layoutRootPath = {$plugin.tx_fluidwidget.view.layoutRootPath}
+		partialRootPath = {$plugin.tx_fluidwidget.view.partialRootPath}
+	}
+}

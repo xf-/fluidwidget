@@ -1,0 +1,4 @@
+<?php
+class Tx_Fluidwidget_ViewHelpers_Bootstrap_PopoverViewHelper extends Tx_Fluidwidget_Core_ViewHelper_AbstractBootstrapViewHelper {
+
+}

@@ -1,0 +1,7 @@
+plugin.tx_fluidwidget {
+	view {
+		templateRootPath = EXT:fluidwidgets/Resources/Private/Templates/
+		layoutRootPath = EXT:fluidwidgets/Resources/Private/Layouts/
+		partialRootPath = EXT:fluidwidgets/Resources/Private/Patials/
+	}
+}
