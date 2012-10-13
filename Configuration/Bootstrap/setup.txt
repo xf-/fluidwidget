@@ -1,4 +1,4 @@
-page.includeJS.5390725920 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/boostrap-transition.js
+page.includeJS.5390725920 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/bootstrap-transition.js
 page.includeJS.5390725921 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/bootstrap-alert.js
 page.includeJS.5390725922 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/bootstrap-button.js
 page.includeJS.5390725923 = EXT:fluidwidget/Resources/Public/Javascripts/Bootstrap/bootstrap-carousel.js
