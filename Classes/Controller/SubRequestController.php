@@ -40,12 +40,34 @@ class Tx_Fluidwidget_Controller_SubRequestController extends Tx_Fluid_Core_Widge
 	 * @param $controllerClassName
 	 * @param $actionName
 	 * @param array $arguments
+	 * @param boolean $returnPreparedInstanceAndArguments If TRUE, returns array($controllerInstance, $actionMethodName, $sortedParameters) instead of calling the method
 	 * @return mixed
 	 * @throws Exception
 	 * @api
 	 */
-	public function inlineControllerAction($controllerClassName, $actionName, array $arguments=array()) {
-
+	public function inlineControllerAction($controllerClassName, $actionName, array $arguments=array(), $returnPreparedInstanceAndArguments=FALSE) {
+		$actionMethodName = $actionName . 'Action';
+		$controllerClassReflection = new ReflectionClass($controllerClassName);
+		$actionMethodReflection = $controllerClassReflection->getMethod($actionMethodName);
+		$argumentsReflection = $actionMethodReflection->getParameters();
+		$sortedParameters = array();
+		foreach ($argumentsReflection as $argumentReflection) {
+			$argumentName = $argumentReflection->getName();
+			$defaultValue = $argumentReflection->getDefaultValue();
+			if (isset($arguments[$argumentName])) {
+				$sortedParameters[] = $arguments[$argumentName];
+			} elseif ($argumentReflection->isDefaultValueAvailable()) {
+				$sortedParameters[] = $defaultValue;
+			} elseif ($argumentReflection->isOptional() === FALSE) {
+				throw new Exception('Missing required argument ' . $argumentName . ' for ' . $controllerClassName . '::' . $actionMethodName, 1350161435);
+			}
+		}
+		$controllerInstance = $this->objectManager->create($controllerClassName);
+		if ($returnPreparedInstanceAndArguments) {
+			return array($controllerInstance, $actionMethodName, $sortedParameters);
+		} else {
+			return call_user_func_array(array($controllerInstance, $actionName), $sortedParameters);
+		}
 	}
 
 	/**
@@ -63,6 +85,7 @@ class Tx_Fluidwidget_Controller_SubRequestController extends Tx_Fluid_Core_Widge
 	 * - will catch Exceptions (which are not resolve-Exceptions) and return error string
 	 * - works across request types (CLI, Web, etc)
 	 * - will not transform provided arguments according to annotations (but method dispatchRequest will)
+	 * - internally uses $this->inlineControllerAction after replicating the necessary environment
 	 *
 	 * @param string $controllerClassName
 	 * @param string $actionName
@@ -72,7 +95,11 @@ class Tx_Fluidwidget_Controller_SubRequestController extends Tx_Fluid_Core_Widge
 	 * @api
 	 */
 	public function executeControllerAction($controllerClassName, $actionName, array $arguments=array()) {
-
+		$returnPreparedInstanceArguments = TRUE;
+		/** @var Tx_Extbase_MVC_Controller_AbstractController $controllerInstance */
+		list ($controllerInstance, $actionMethodName, $sortedParameters) = $this->inlineControllerAction($controllerClassName, $actionName, $arguments, $returnPreparedInstanceArguments);
+			// TODO: create and implement ad-hoc context for execution
+		return call_user_func_array(array($controllerInstance, $actionMethodName), $sortedParameters);
 	}
 
 	/**
