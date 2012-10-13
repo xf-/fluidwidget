@@ -2,6 +2,11 @@
 class Tx_Fluidwidget_Controller_SubRequestController extends Tx_Fluid_Core_Widget_AbstractWidgetController implements t3lib_Singleton {
 
 	/**
+	 * @var array
+	 */
+	protected $supportedRequestTypes = array('Tx_Fluid_Core_Widget_WidgetRequest', 'Tx_Extbase_MVC_Web_Request');
+
+	/**
 	 * @var Tx_Extbase_MVC_Dispatcher
 	 */
 	protected $dispatcher;
@@ -17,10 +22,99 @@ class Tx_Fluidwidget_Controller_SubRequestController extends Tx_Fluid_Core_Widge
 	protected $responseType = 'Tx_Extbase_MVC_Web_Response';
 
 	/**
+	 * @var Tx_Extbase_MVC_Web_Routing_UriBuilder
+	 */
+	protected $uriBuilder;
+
+	/**
+	 * CONSTRUCTOR
+	 */
+	public function initializeObject() {
+		$this->uriBuilder = $this->objectManager->create('Tx_Extbase_MVC_Web_Routing_UriBuilder');
+	}
+
+	/**
 	 * @param Tx_Extbase_MVC_Dispatcher $dispatcher
 	 */
 	public function injectDispatcher(Tx_Extbase_MVC_Dispatcher $dispatcher) {
 		$this->dispatcher = $dispatcher;
+	}
+
+	/**
+	 * Handles a request. The result output is returned by altering the given response.
+	 *
+	 * @param Tx_Extbase_MVC_RequestInterface $request The request object
+	 * @param Tx_Extbase_MVC_ResponseInterface $response The response, modified by this handler
+	 * @return void
+	 * @api
+	 */
+	public function processRequest(Tx_Extbase_MVC_RequestInterface $request, Tx_Extbase_MVC_ResponseInterface $response) {
+		if ($request instanceof Tx_Fluid_Core_Widget_WidgetRequest) {
+			$this->widgetConfiguration = $request->getWidgetContext()->getWidgetConfiguration();
+		}
+		if (!$this->canProcessRequest($request)) {
+			throw new Tx_Extbase_MVC_Exception_UnsupportedRequestType(get_class($this) . ' does not support requests of type "' . get_class($request) . '". Supported types are: ' . implode(' ', $this->supportedRequestTypes) , 1187701131);
+		}
+
+		$this->request = $request;
+		$this->request->setDispatched(TRUE);
+		$this->response = $response;
+
+		$this->uriBuilder = $this->objectManager->create('Tx_Extbase_MVC_Web_Routing_UriBuilder');
+		$this->uriBuilder->setRequest($request);
+
+		$this->actionMethodName = $this->resolveActionMethodName();
+
+		$this->initializeActionMethodArguments();
+		$this->initializeActionMethodValidators();
+
+		$this->initializeAction();
+		$actionInitializationMethodName = 'initialize' . ucfirst($this->actionMethodName);
+		if (method_exists($this, $actionInitializationMethodName)) {
+			call_user_func(array($this, $actionInitializationMethodName));
+		}
+
+		$this->mapRequestArgumentsToControllerArguments();
+		$this->checkRequestHash();
+		$this->controllerContext = $this->buildControllerContext();
+		$this->view = $this->resolveView();
+		if ($this->view !== NULL) {
+			$this->initializeView($this->view);
+		}
+		$this->callActionMethod();
+	}
+
+	/**
+	 * Allows the widget template root path to be overriden via the framework configuration,
+	 * e.g. plugin.tx_extension.view.widget.<WidgetViewHelperClassName>.templateRootPath
+	 *
+	 * @param Tx_Extbase_MVC_View_ViewInterface $view
+	 * @return void
+	 */
+	protected function setViewConfiguration(Tx_Extbase_MVC_View_ViewInterface $view) {
+		$extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+		if ($this->request instanceof Tx_Fluid_Core_Widget_WidgetRequest) {
+			$widgetViewHelperClassName = $this->request->getWidgetContext()->getWidgetViewHelperClassName();
+		}
+
+		if (isset($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName]['templateRootPath'])
+			&& strlen($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName]['templateRootPath']) > 0
+			&& method_exists($view, 'setTemplateRootPath')) {
+			$view->setTemplateRootPath(t3lib_div::getFileAbsFileName($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName]['templateRootPath']));
+		}
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function requestAction() {
+		$requestArguments = $_REQUEST;
+		$extensionName = $requestArguments['extensionName'];
+		$pluginName = $requestArguments['pluginName'];
+		unset($requestArguments['type'], $requestArguments['cHash'], $requestArguments['extensionName'], $requestArguments['pluginName']);
+		$scope = key($requestArguments);
+		$arguments = $requestArguments[$scope];
+		return $this->dispatchRequest($arguments['action'], $arguments['controller'], $extensionName, $pluginName, $arguments);
 	}
 
 	/**
@@ -120,15 +214,15 @@ class Tx_Fluidwidget_Controller_SubRequestController extends Tx_Fluid_Core_Widge
 	 *
 	 * @param string|NULL $actionName
 	 * @param string|NULL $controllerName
-	 * @param string|NULL $pluginName
 	 * @param string|NULL $extensionName
+	 * @param string|NULL $pluginName
 	 * @param array $arguments
 	 * @param integer $pageUid
 	 * @return Tx_Extbase_MVC_ResponseInterface
 	 * @throws Exception
 	 * @api
 	 */
-	public function dispatchRequest($actionName=NULL, $controllerName=NULL, $pluginName=NULL, $extensionName=NULL, array $arguments=array(), $pageUid=0) {
+	public function dispatchRequest($actionName=NULL, $controllerName=NULL, $extensionName=NULL, $pluginName=NULL, array $arguments=array(), $pageUid=0) {
 		$contentObjectBackup = $this->configurationManager->getContentObject();
 		if ($this->request) {
 			$configurationBackup = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK, $this->request->getControllerExtensionName(), $this->request->getPluginName());

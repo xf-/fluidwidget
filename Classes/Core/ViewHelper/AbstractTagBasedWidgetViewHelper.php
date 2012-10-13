@@ -24,6 +24,18 @@ class Tx_Fluidwidget_Core_ViewHelper_AbstractTagBasedWidgetViewHelper extends Tx
 	protected $tagName = 'div';
 
 	/**
+	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
+	 */
+	protected $configurationManager;
+
+	/**
+	 * @param Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager
+	 */
+	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager) {
+		$this->configurationManager = $configurationManager;
+	}
+
+	/**
 	 * Inject a TagBuilder
 	 *
 	 * @param Tx_Fluid_Core_ViewHelper_TagBuilder $tagBuilder Tag builder

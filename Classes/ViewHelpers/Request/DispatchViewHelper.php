@@ -55,8 +55,12 @@ class Tx_Fluidwidget_ViewHelpers_Request_DispatchViewHelper extends Tx_Fluidwidg
 		try {
 			if ($this->arguments['ajax'] || ($pageUid !== $requestPageUid && $this->arguments['pageUid'])) {
 					// AJAX request; let the client browser perform the request and fill a container
+				$settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, 'FluidWidget', 'SubRequest');
 				$uriBuilder = $this->controller->getUriBuilder();
+				$arguments['extensionName'] = $extensionName;
+				$arguments['pluginName'] = $pluginName;
 				$uri = $uriBuilder->setRequest($this->controllerContext->getRequest())
+					->setTargetPageType($settings['ajaxTypeNum'])
 					->setFormat($format)->setArguments($arguments)
 					->setCreateAbsoluteUri(TRUE)->setTargetPageUid($pageUid)
 					->uriFor($actionName, $arguments, $controllerName, $extensionName, $pluginName);
@@ -69,7 +73,7 @@ class Tx_Fluidwidget_ViewHelpers_Request_DispatchViewHelper extends Tx_Fluidwidg
 				$this->tag->setContent($this->renderChildren());
 				return $this->tag->render();
 			}
-			return $this->controller->dispatchRequest($actionName, $controllerName, $pluginName, $extensionName, $arguments)->getContent();
+			return $this->controller->dispatchRequest($actionName, $controllerName, $extensionName, $pluginName, $arguments)->getContent();
 		} catch (Exception $error) {
 			if ($this->arguments['debug']) {
 				throw $error;
