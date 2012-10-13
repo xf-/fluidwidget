@@ -40,8 +40,10 @@ class Tx_Fluidwidget_ViewHelpers_Content_AjaxFluxContentViewHelper extends Tx_Fl
 	 * @return string
 	 */
 	public function render() {
-		$this->arguments['arguments']['parentUid'] = $this->arguments['parentUid'];
-		$this->arguments['arguments']['area'] = $this->arguments['are'];
+		$this->arguments['arguments']['localizedUid'] = $this->arguments['parentUid'];
+		$this->arguments['arguments']['area'] = $this->arguments['area'];
+		$this->arguments['action'] = 'renderChildContent';
+		return parent::render();
 	}
 
 }

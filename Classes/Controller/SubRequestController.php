@@ -113,7 +113,15 @@ class Tx_Fluidwidget_Controller_SubRequestController extends Tx_Fluid_Core_Widge
 		$pluginName = $requestArguments['pluginName'];
 		unset($requestArguments['type'], $requestArguments['cHash'], $requestArguments['extensionName'], $requestArguments['pluginName']);
 		$scope = key($requestArguments);
+		foreach (array_keys($requestArguments) as $key) {
+			if (strpos($key, 'tx_') === 0) {
+				$scope = $key;
+				break;
+			}
+		}
 		$arguments = $requestArguments[$scope];
+		#var_dump($arguments);
+		#exit();
 		return $this->dispatchRequest($arguments['action'], $arguments['controller'], $extensionName, $pluginName, $arguments);
 	}
 
