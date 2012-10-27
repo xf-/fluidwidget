@@ -16,6 +16,7 @@ abstract class Tx_Fluidwidget_Core_ViewHelper_AbstractUriViewHelper extends Tx_F
 			access protection - for example, a file linked with "passthrough" would only be downloadable if the \
 			plugin/content that displays this Widget is also accessible.', FALSE, 'direct');
 		$this->registerArgument('target', 'string', 'URI resource style target. Absolute paths supported when using "passthrough"');
+		$this->registerArgument('content', 'string', 'If used, takes content from this variable instead of tag content', FALSE, NULL);
 		$this->registerArgument('mimeType', 'string', 'If set, overrides automatically detected MIME type. Only applies to "passthrough" mode');
 	}
 
@@ -24,7 +25,10 @@ abstract class Tx_Fluidwidget_Core_ViewHelper_AbstractUriViewHelper extends Tx_F
 	 * @return string
 	 */
 	public function render() {
-		$this->arguments['content'] = $this->renderChildren();
+		if (!$this->arguments['content']) {
+			$this->arguments['content'] = $this->renderChildren();
+		}
+		$this->controller->setContent($this->arguments['content']);
 		return $this->initiateSubRequest();
 	}
 
