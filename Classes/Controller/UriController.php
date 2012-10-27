@@ -33,10 +33,10 @@ class Tx_Fluidwidget_Controller_UriController extends Tx_Fluid_Core_Widget_Abstr
 	public function downloadAction() {
 		$target = $this->widgetConfiguration['target'];
 		if ($this->widgetConfiguration['mode'] != 'passthrough') {
-			header("Location: " . $target);
+			header('Location: ' . $target);
 		} else {
 			$absouteTargetPath = t3lib_div::getFileAbsFileName($target);
-			header("Content-type: " . mime_content_type($absouteTargetPath));
+			header('Content-type: ' . mime_content_type($absouteTargetPath));
 			$fp = fopen($absouteTargetPath, 'r');
 			fpassthru($fp);
 		}
