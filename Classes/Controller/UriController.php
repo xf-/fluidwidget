@@ -1,5 +1,5 @@
 <?php
-class Tx_Fluidwidget_Controller_UriController extends Tx_Fluid_Core_Widget_AbstractWidgetController {
+class Tx_Fluidwidget_Controller_UriController extends Tx_Fluidwidget_Core_Widget_AbstractWidgetController implements Tx_Fluidwidget_Core_Widget_WidgetControllerInterface {
 
 	/**
 	 * @param Tx_Extbase_MVC_View_ViewInterface $view

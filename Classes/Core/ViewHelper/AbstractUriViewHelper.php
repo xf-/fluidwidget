@@ -1,17 +1,10 @@
 <?php
-class Tx_Fluidwidget_Core_ViewHelper_AbstractUriViewHelper extends Tx_Fluid_Core_Widget_AbstractWidgetViewHelper {
+abstract class Tx_Fluidwidget_Core_ViewHelper_AbstractUriViewHelper extends Tx_Fluidwidget_Core_Widget_AbstractWidgetViewHelper {
 
 	/**
 	 * @var Tx_Fluidwidget_Controller_UriController
 	 */
 	protected $controller;
-
-	/**
-	 * @param Tx_Fluidwidget_Controller_UriController $controller
-	 */
-	public function injectController(Tx_Fluidwidget_Controller_UriController $controller) {
-		$this->controller = $controller;
-	}
 
 	/**
 	 * Initialize arguments
