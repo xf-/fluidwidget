@@ -2,15 +2,19 @@
 <f:layout name="Uri" />
 <f:section name="Main">
 	<f:if condition="{0: mode} == {0: 'passthrough'}">
-		<f:if condition="{return}">
-			<f:then><f:widget.uri action="download" /></f:then>
-			<f:else><f:widget.link action="download">{content}</f:widget.link></f:else>
-		</f:if>
+		<f:then>
+			<f:if condition="{return}">
+				<f:then><f:widget.uri action="download" /></f:then>
+				<f:else><f:widget.link action="download">{content}</f:widget.link></f:else>
+			</f:if>
+		</f:then>
 	</f:if>
-	<f:if condition="{0: mode} == {0: 'default'}">
-		<f:if condition="{return}">
-			<f:then>{target}</f:then>
-			<f:else><a href="{target}">{content}</a></f:else>
-		</f:if>
+	<f:if condition="{0: mode} == {0: 'direct'}">
+		<f:then>
+			<f:if condition="{return}">
+				<f:then>{target}</f:then>
+				<f:else><a href="{target}">{content}</a></f:else>
+			</f:if>
+		</f:then>
 	</f:if>
 </f:section>
