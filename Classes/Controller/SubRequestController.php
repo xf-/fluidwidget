@@ -1,5 +1,5 @@
 <?php
-class Tx_Fluidwidget_Controller_SubRequestController extends Tx_Fluid_Core_Widget_AbstractWidgetController implements t3lib_Singleton {
+class Tx_Fluidwidget_Controller_SubRequestController extends Tx_Fluidwidget_Core_Widget_AbstractWidgetController implements Tx_Fluidwidget_Core_Widget_WidgetControllerInterface {
 
 	/**
 	 * @var array
