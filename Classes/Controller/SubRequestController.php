@@ -53,7 +53,7 @@ class Tx_Fluidwidget_Controller_SubRequestController extends Tx_Fluid_Core_Widge
 			$this->widgetConfiguration = $request->getWidgetContext()->getWidgetConfiguration();
 		}
 		if (!$this->canProcessRequest($request)) {
-			throw new Tx_Extbase_MVC_Exception_UnsupportedRequestType(get_class($this) . ' does not support requests of type "' . get_class($request) . '". Supported types are: ' . implode(' ', $this->supportedRequestTypes) , 1187701131);
+			throw new Tx_Extbase_MVC_Exception_UnsupportedRequestType(get_class($this) . ' does not support requests of type "' . get_class($request) . '". Supported types are: ' . implode(' ', $this->supportedRequestTypes), 1187701131);
 		}
 
 		$this->request = $request;
@@ -120,8 +120,6 @@ class Tx_Fluidwidget_Controller_SubRequestController extends Tx_Fluid_Core_Widge
 			}
 		}
 		$arguments = $requestArguments[$scope];
-		#var_dump($arguments);
-		#exit();
 		return $this->dispatchRequest($arguments['action'], $arguments['controller'], $extensionName, $pluginName, $arguments);
 	}
 
@@ -252,6 +250,7 @@ class Tx_Fluidwidget_Controller_SubRequestController extends Tx_Fluid_Core_Widge
 		if (isset($configurationBackup)) {
 			$this->configurationManager->setConfiguration($configurationBackup);
 		}
+		unset($pageUid);
 		return $response;
 	}
 
