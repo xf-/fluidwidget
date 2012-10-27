@@ -1,19 +1,16 @@
 {namespace widget=Tx_Fluidwidget_ViewHelpers}
-{namespace fed=Tx_Fed_ViewHelpers}
 <f:layout name="Uri" />
 <f:section name="Main">
-	<fed:switch value="{mode}">
-		<fed:case case="passthrough" break="TRUE">
-			<f:if condition="{return}">
-				<f:then><f:widget.uri action="download" /></f:then>
-				<f:else><f:widget.link action="download">{content}</f:widget.link></f:else>
-			</f:if>
-		</fed:case>
-		<fed:case case="default" break="TRUE">
-			<f:if condition="{return}">
-				<f:then>{target}</f:then>
-				<f:else><a href="{target}">{content}</a></f:else>
-			</f:if>
-		</fed:case>
-	</fed:switch>
+	<f:if condition="{0: mode} == {0: 'passthrough'}">
+		<f:if condition="{return}">
+			<f:then><f:widget.uri action="download" /></f:then>
+			<f:else><f:widget.link action="download">{content}</f:widget.link></f:else>
+		</f:if>
+	</f:if>
+	<f:if condition="{0: mode} == {0: 'default'}">
+		<f:if condition="{return}">
+			<f:then>{target}</f:then>
+			<f:else><a href="{target}">{content}</a></f:else>
+		</f:if>
+	</f:if>
 </f:section>
