@@ -7,7 +7,7 @@ class Tx_Fluidwidget_Controller_UriController extends Tx_Fluid_Core_Widget_Abstr
 	public function initializeView(Tx_Extbase_MVC_View_ViewInterface $view) {
 		$typoScriptSettings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		$paths = $typoScriptSettings['plugin.']['tx_fluidwidget.']['view.'];
-		$paths = Tx_Fed_Utility_Path::translatePath($paths);
+		$paths = Tx_Fluidwidget_Utility_Path::translatePath($paths);
 		$view->setTemplateRootPath($paths['templateRootPath']);
 		$view->setPartialRootPath($paths['partialRootPath']);
 		$view->setLayoutRootPath($paths['layoutRootPath']);
