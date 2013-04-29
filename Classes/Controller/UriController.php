@@ -54,9 +54,19 @@ class Tx_Fluidwidget_Controller_UriController extends Tx_Fluidwidget_Core_Widget
 		if ($this->widgetConfiguration['mode'] != 'passthrough') {
 			header('Location: ' . $target);
 		} else {
-			$absouteTargetPath = t3lib_div::getFileAbsFileName($target);
-			header('Content-type: ' . mime_content_type($absouteTargetPath));
-			$fp = fopen($absouteTargetPath, 'r');
+			$absoluteTargetPath = t3lib_div::getFileAbsFileName($target);
+			if (strstr($_SERVER['HTTP_USER_AGENT'], 'MSIE')) {
+				header('Pragma: public');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+				header('Content-type: application-download');
+				header('Content-length: ' . filesize($absoluteTargetPath));
+				header('Content-Transfer-Encoding: binary');
+			} else {
+				header('Content-type: ' . mime_content_type($absoluteTargetPath));
+			}
+			header('Content-disposition: attachment; filename="' . basename($absoluteTargetPath) . '"');
+			$fp = fopen($absoluteTargetPath, 'r');
 			fpassthru($fp);
 		}
 		exit();
