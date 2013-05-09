@@ -65,9 +65,15 @@ class Tx_Fluidwidget_Controller_UriController extends Tx_Fluidwidget_Core_Widget
 			} else {
 				header('Content-type: ' . mime_content_type($absoluteTargetPath));
 			}
+			$handle = fopen($absoluteTargetPath, 'rb');
+			$chunkSize = 1048576;
 			header('Content-disposition: attachment; filename="' . basename($absoluteTargetPath) . '"');
-			$fp = fopen($absoluteTargetPath, 'r');
-			fpassthru($fp);
+			while (FALSE === feof($handle)) {
+				echo fread($handle, $chunkSize);
+				ob_flush();
+				flush();
+			}
+			fclose($handle);
 		}
 		exit();
 	}
