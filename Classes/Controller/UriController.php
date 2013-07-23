@@ -41,7 +41,8 @@ class Tx_Fluidwidget_Controller_UriController extends Tx_Fluidwidget_Core_Widget
 		foreach ($this->widgetConfiguration as $name=>$value) {
 			$this->view->assign($name, $value);
 		}
-		$this->view->assign('return', in_array('Uri', explode('_', get_class($this))));
+		$widgetViewHelperClassName = $this->request->getWidgetContext()->getWidgetViewHelperClassName();
+		$this->view->assign('return', in_array('Uri', explode('_', $widgetViewHelperClassName)));
 		$this->view->assign('content', $this->content);
 		return trim($this->view->render());
 	}
