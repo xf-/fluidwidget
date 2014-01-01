@@ -25,7 +25,7 @@
  * Basically, it is an ActionController, and it additionally
  * has $this->widgetConfiguration set to the Configuration of the current Widget.
  *
- * Note: Re-authored, Claus Due <claus@wildside.dk>, Wildside A/S
+ * Note: Re-authored, Claus Due <claus@namelesscoder.net>
  *
  * Note: This is ported from Fluid with one singular purpose: avoid making
  * Controllers into Singletons. While Dependency Injection certainly is handy

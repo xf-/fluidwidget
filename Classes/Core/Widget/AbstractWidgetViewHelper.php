@@ -21,7 +21,7 @@
  *                                                                        */
 
 /**
- * Note: Re-authored, Claus Due <claus@wildside.dk>, Wildside A/S
+ * Note: Re-authored, Claus Due <claus@namelesscoder.net>
  *
  * Note: Re-authoring implies completely detaching from Fluid's
  * core AbstractWidgetViewHelper class. This does not cause problems in
