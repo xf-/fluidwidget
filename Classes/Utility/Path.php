@@ -29,7 +29,7 @@
  * @package Fluidwidget
  * @subpackage Utility
  */
-class Tx_Fluidwidget_Utility_Path implements t3lib_Singleton {
+class Tx_Fluidwidget_Utility_Path implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 * Translates an array of paths or single path into absolute paths/path
@@ -39,7 +39,7 @@ class Tx_Fluidwidget_Utility_Path implements t3lib_Singleton {
 	 */
 	public static function translatePath($path) {
 		if (is_array($path) == FALSE) {
-			return t3lib_div::getFileAbsFileName($path);
+			return \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($path);
 		} else {
 			foreach ($path as $key=>$subPath) {
 				$path[$key] = self::translatePath($subPath);

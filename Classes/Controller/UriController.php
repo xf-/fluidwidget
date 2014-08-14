@@ -21,10 +21,10 @@ class Tx_Fluidwidget_Controller_UriController extends Tx_Fluidwidget_Core_Widget
 	}
 
 	/**
-	 * @param Tx_Extbase_MVC_View_ViewInterface $view
+	 * @param \TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view
 	 */
-	public function initializeView(Tx_Extbase_MVC_View_ViewInterface $view) {
-		$typoScriptSettings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+	public function initializeView(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view) {
+		$typoScriptSettings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		$paths = $typoScriptSettings['plugin.']['tx_fluidwidget.']['view.'];
 		$paths = Tx_Fluidwidget_Utility_Path::translatePath($paths);
 		$view->setTemplateRootPath($paths['templateRootPath']);
@@ -55,7 +55,7 @@ class Tx_Fluidwidget_Controller_UriController extends Tx_Fluidwidget_Core_Widget
 		if ($this->widgetConfiguration['mode'] != 'passthrough') {
 			header('Location: ' . $target);
 		} else {
-			$absoluteTargetPath = t3lib_div::getFileAbsFileName($target);
+			$absoluteTargetPath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($target);
 			if (strstr($_SERVER['HTTP_USER_AGENT'], 'MSIE')) {
 				header('Pragma: public');
 				header('Expires: 0');

@@ -45,7 +45,7 @@ class Tx_Fluidwidget_ViewHelpers_Request_DispatchViewHelper extends Tx_Fluidwidg
 		$extensionName = $this->getArgumentValueWithFallbackFromCurrentRequest('extensionName');
 		$arguments = $this->getArgumentValueWithFallbackFromCurrentRequest('arguments');
 		$format = $this->getArgumentValueWithFallbackFromCurrentRequest('format');
-		$requestPageUid = (TYPO3_MODE === 'FE' ? $GLOBALS['TSFE']->id : t3lib_div::_GET('id'));
+		$requestPageUid = (TYPO3_MODE === 'FE' ? $GLOBALS['TSFE']->id : \TYPO3\CMS\Core\Utility\GeneralUtility::_GET('id'));
 		$pageUid = $this->arguments['pageUid'] ? $this->arguments['pageUid'] : $requestPageUid;
 		if (is_array($arguments) === FALSE) {
 			if ($this->arguments['debug']) {
@@ -55,7 +55,7 @@ class Tx_Fluidwidget_ViewHelpers_Request_DispatchViewHelper extends Tx_Fluidwidg
 		try {
 			if ($this->arguments['ajax'] || ($pageUid !== $requestPageUid && $this->arguments['pageUid'])) {
 					// AJAX request; let the client browser perform the request and fill a container
-				$settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, 'FluidWidget', 'SubRequest');
+				$settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, 'FluidWidget', 'SubRequest');
 				$uriBuilder = $this->controller->getUriBuilder();
 				$arguments['extensionName'] = $extensionName;
 				$arguments['pluginName'] = $pluginName;
@@ -87,6 +87,7 @@ class Tx_Fluidwidget_ViewHelpers_Request_DispatchViewHelper extends Tx_Fluidwidg
 	 *
 	 * @param string $argumentName The argument to fetch
 	 * @param string $requestArgumentName If specified, reads this attribute instead of $argumentName from the Request; usually a "Name" suffix would be used in the Request
+	 * @throws Exception
 	 * @return mixed
 	 */
 	protected function getArgumentValueWithFallbackFromCurrentRequest($argumentName, $requestArgumentName=NULL) {
@@ -95,7 +96,7 @@ class Tx_Fluidwidget_ViewHelpers_Request_DispatchViewHelper extends Tx_Fluidwidg
 		}
 		$request = $this->controllerContext->getRequest();
 		try {
-			return Tx_Extbase_Reflection_ObjectAccess::getProperty($request, $requestArgumentName !== NULL ? $requestArgumentName : $argumentName);
+			return \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($request, $requestArgumentName !== NULL ? $requestArgumentName : $argumentName);
 		} catch (Exception $error) {
 			if ($this->arguments['debug']) {
 				throw $error;

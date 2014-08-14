@@ -45,7 +45,7 @@
  *
  * @api
  */
-abstract class Tx_Fluidwidget_Core_Widget_AbstractWidgetViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper implements Tx_Fluid_Core_ViewHelper_Facets_ChildNodeAccessInterface {
+abstract class Tx_Fluidwidget_Core_Widget_AbstractWidgetViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper implements \TYPO3\CMS\Fluid\Core\ViewHelper\Facets\ChildNodeAccessInterface {
 
 	/**
 	 * The Controller associated to this widget.
@@ -59,22 +59,23 @@ abstract class Tx_Fluidwidget_Core_Widget_AbstractWidgetViewHelper extends Tx_Fl
 	protected $controller;
 
 	/**
-	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	protected $objectManager;
 
 	/**
-	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
 	 * @return void
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
-		$this->widgetContext = $this->objectManager->create('Tx_Fluid_Core_Widget_WidgetContext');
+		$this->widgetContext = $this->objectManager->get('TYPO3\CMS\Fluid\Core\Widget\WidgetContext');
 	}
 
 	/**
 	 * Initialize this ViewHelper instance
 	 *
+	 * @throws Exception
 	 * @return void
 	 */
 	public function initialize() {
@@ -93,7 +94,7 @@ abstract class Tx_Fluidwidget_Core_Widget_AbstractWidgetViewHelper extends Tx_Fl
 			$controllerInstance = $this->objectManager->get($controllerClassName);
 			$this->injectController($controllerInstance);
 		} else {
-			$controllerInstance = $this->objectManager->create($controllerClassName);
+			$controllerInstance = $this->objectManager->get($controllerClassName);
 		}
 		$this->initializeController($controllerInstance);
 		$this->controller = $controllerInstance;
@@ -123,33 +124,33 @@ abstract class Tx_Fluidwidget_Core_Widget_AbstractWidgetViewHelper extends Tx_Fl
 	protected $ajaxWidget = FALSE;
 
 	/**
-	 * @var Tx_Fluid_Core_Widget_AjaxWidgetContextHolder
+	 * @var \TYPO3\CMS\Fluid\Core\Widget\AjaxWidgetContextHolder
 	 */
 	private $ajaxWidgetContextHolder;
 
 	/**
-	 * @var Tx_Extbase_Service_ExtensionService
+	 * @var \TYPO3\CMS\Extbase\Service\ExtensionService
 	 */
 	protected $extensionService;
 
 	/**
-	 * @var Tx_Fluid_Core_Widget_WidgetContext
+	 * @var \TYPO3\CMS\Fluid\Core\Widget\WidgetContext
 	 */
 	private $widgetContext;
 
 	/**
-	 * @param Tx_Fluid_Core_Widget_AjaxWidgetContextHolder $ajaxWidgetContextHolder
+	 * @param \TYPO3\CMS\Fluid\Core\Widget\AjaxWidgetContextHolder $ajaxWidgetContextHolder
 	 * @return void
 	 */
-	public function injectAjaxWidgetContextHolder(Tx_Fluid_Core_Widget_AjaxWidgetContextHolder $ajaxWidgetContextHolder) {
+	public function injectAjaxWidgetContextHolder(\TYPO3\CMS\Fluid\Core\Widget\AjaxWidgetContextHolder $ajaxWidgetContextHolder) {
 		$this->ajaxWidgetContextHolder = $ajaxWidgetContextHolder;
 	}
 
 	/**
-	 * @param Tx_Extbase_Service_ExtensionService $extensionService
+	 * @param \TYPO3\CMS\Extbase\Service\ExtensionService $extensionService
 	 * @return void
 	 */
-	public function injectExtensionService(Tx_Extbase_Service_ExtensionService $extensionService) {
+	public function injectExtensionService(\TYPO3\CMS\Extbase\Service\ExtensionService $extensionService) {
 		$this->extensionService = $extensionService;
 	}
 
@@ -199,7 +200,7 @@ abstract class Tx_Fluidwidget_Core_Widget_AbstractWidgetViewHelper extends Tx_Fl
 	 * @return void
 	 */
 	public function setChildNodes(array $childNodes) {
-		$rootNode = $this->objectManager->create('Tx_Fluid_Core_Parser_SyntaxTree_RootNode');
+		$rootNode = $this->objectManager->get('TYPO3\CMS\Fluid\Core\Parser\SyntaxTree\RootNode');
 		foreach ($childNodes as $childNode) {
 			$rootNode->addChildNode($childNode);
 		}
@@ -220,22 +221,23 @@ abstract class Tx_Fluidwidget_Core_Widget_AbstractWidgetViewHelper extends Tx_Fl
 	 * Initiate a sub request to $this->controller. Make sure to fill $this->controller
 	 * via Dependency Injection.
 	 *
-	 * @return Tx_Extbase_MVC_ResponseInterface the response of this request.
+	 * @throws TYPO3\CMS\Fluid\Core\Widget\Exception\MissingControllerException
+	 * @return \TYPO3\CMS\Extbase\Mvc\ResponseInterface the response of this request.
 	 * @api
 	 */
 	protected function initiateSubRequest() {
-		if (!($this->controller instanceof Tx_Fluid_Core_Widget_AbstractWidgetController) && !($this->controller instanceof Tx_Fluidwidget_Core_Widget_WidgetControllerInterface)) {
+		if (!($this->controller instanceof \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetController) && !($this->controller instanceof Tx_Fluidwidget_Core_Widget_WidgetControllerInterface)) {
 			if (isset($this->controller)) {
-				throw new Tx_Fluid_Core_Widget_Exception_MissingControllerException('initiateSubRequest() can not be called if there is no valid controller extending Tx_Fluid_Core_Widget_AbstractWidgetController or implementing Tx_Fluidwidget_Core_Widget_WidgetControllerInterface. Got "' . get_class($this->controller) . '" in class "' . get_class($this) . '".', 1289422564);
+				throw new \TYPO3\CMS\Fluid\Core\Widget\Exception\MissingControllerException('initiateSubRequest() can not be called if there is no valid controller extending \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetController or implementing Tx_Fluidwidget_Core_Widget_WidgetControllerInterface. Got "' . get_class($this->controller) . '" in class "' . get_class($this) . '".', 1289422564);
 			}
-			throw new Tx_Fluid_Core_Widget_Exception_MissingControllerException('initiateSubRequest() can not be called if there is no controller inside $this->controller. Make sure to add a corresponding injectController method to your WidgetViewHelper class "' . get_class($this) . '".', 1284401632);
+			throw new \TYPO3\CMS\Fluid\Core\Widget\Exception\MissingControllerException('initiateSubRequest() can not be called if there is no controller inside $this->controller. Make sure to add a corresponding injectController method to your WidgetViewHelper class "' . get_class($this) . '".', 1284401632);
 		}
 
-		$subRequest = $this->objectManager->create('Tx_Fluid_Core_Widget_WidgetRequest');
+		$subRequest = $this->objectManager->get('TYPO3\CMS\Fluid\Core\Widget\WidgetRequest');
 		$subRequest->setWidgetContext($this->widgetContext);
 		$this->passArgumentsToSubRequest($subRequest);
 
-		$subResponse = $this->objectManager->create('Tx_Extbase_MVC_Web_Response');
+		$subResponse = $this->objectManager->get('TYPO3\CMS\Extbase\Mvc\Web\Response');
 		$this->controller->processRequest($subRequest, $subResponse);
 		return $subResponse;
 	}
@@ -243,10 +245,10 @@ abstract class Tx_Fluidwidget_Core_Widget_AbstractWidgetViewHelper extends Tx_Fl
 	/**
 	 * Pass the arguments of the widget to the subrequest.
 	 *
-	 * @param Tx_Fluid_Core_Widget_WidgetRequest $subRequest
+	 * @param \TYPO3\CMS\Fluid\Core\Widget\WidgetRequest $subRequest
 	 * @return void
 	 */
-	private function passArgumentsToSubRequest(Tx_Fluid_Core_Widget_WidgetRequest $subRequest) {
+	private function passArgumentsToSubRequest(\TYPO3\CMS\Fluid\Core\Widget\WidgetRequest $subRequest) {
 		$arguments = $this->controllerContext->getRequest()->getArguments();
 		$widgetIdentifier = $this->widgetContext->getWidgetIdentifier();
 		if (isset($arguments[$widgetIdentifier])) {
@@ -267,13 +269,13 @@ abstract class Tx_Fluidwidget_Core_Widget_AbstractWidgetViewHelper extends Tx_Fl
 	 * @todo clean up, and make it somehow more routing compatible.
 	 */
 	private function initializeWidgetIdentifier() {
-		if (!$this->viewHelperVariableContainer->exists('Tx_Fluid_Core_Widget_AbstractWidgetViewHelper', 'nextWidgetNumber')) {
+		if (!$this->viewHelperVariableContainer->exists('TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper', 'nextWidgetNumber')) {
 			$widgetCounter = 0;
 		} else {
-			$widgetCounter = $this->viewHelperVariableContainer->get('Tx_Fluid_Core_Widget_AbstractWidgetViewHelper', 'nextWidgetNumber');
+			$widgetCounter = $this->viewHelperVariableContainer->get('TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper', 'nextWidgetNumber');
 		}
 		$widgetIdentifier = '@widget_' . $widgetCounter;
-		$this->viewHelperVariableContainer->addOrUpdate('Tx_Fluid_Core_Widget_AbstractWidgetViewHelper', 'nextWidgetNumber', $widgetCounter + 1);
+		$this->viewHelperVariableContainer->addOrUpdate('TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper', 'nextWidgetNumber', $widgetCounter + 1);
 
 		$this->widgetContext->setWidgetIdentifier($widgetIdentifier);
 	}

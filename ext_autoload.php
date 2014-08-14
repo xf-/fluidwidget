@@ -1,10 +1,10 @@
 <?php
 $classPrefix = 'Tx_Fluidwidget_';
-$classPath = t3lib_extMgm::extPath('fluidwidget', 'Classes/');
+$classPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('fluidwidget', 'Classes/');
 if ($GLOBALS['autoload_cache'][$classPath]) {
 	return $GLOBALS['autoload_cache'][$classPath];
 }
-$files = t3lib_div::getAllFilesAndFoldersInPath(array(), $classPath);
+$files = \TYPO3\CMS\Core\Utility\GeneralUtility::getAllFilesAndFoldersInPath(array(), $classPath);
 $autoloadRegistry = array();
 foreach ($files as $filename) {
 	$relativeName = substr($filename, strlen($classPath));

@@ -1,5 +1,5 @@
 <?php
-class Tx_Fluidwidget_Controller_BootstrapController extends Tx_Fluid_Core_Widget_AbstractWidgetController {
+class Tx_Fluidwidget_Controller_BootstrapController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetController {
 
 	/**
 	 * Void - suppress output

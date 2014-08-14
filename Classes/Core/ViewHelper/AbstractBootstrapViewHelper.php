@@ -1,5 +1,5 @@
 <?php
-class Tx_Fluidwidget_Core_ViewHelper_AbstractBootstrapViewHelper extends Tx_Fluid_Core_Widget_AbstractWidgetViewHelper {
+class Tx_Fluidwidget_Core_ViewHelper_AbstractBootstrapViewHelper extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper {
 
 	/**
 	 * Widget type - overridden by subclasses

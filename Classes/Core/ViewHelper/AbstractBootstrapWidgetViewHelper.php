@@ -1,5 +1,5 @@
 <?php
-class Tx_Fluidwidget_Core_ViewHelper_AbstractBootstrapWidgetViewHelper extends Tx_Fluid_Core_Widget_AbstractWidgetViewHelper {
+class Tx_Fluidwidget_Core_ViewHelper_AbstractBootstrapWidgetViewHelper extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper {
 
 	/**
 	 * Widget type - overridden by subclasses
@@ -9,14 +9,14 @@ class Tx_Fluidwidget_Core_ViewHelper_AbstractBootstrapWidgetViewHelper extends T
 	protected $widgetType;
 
 	/**
-	 * @var Tx_Fluidwidget_Bootstrap_Controller_BootstrapController
+	 * @var \Tx_Fluidwidget_Controller_BootstrapController
 	 */
 	protected $controller;
 
 	/**
-	 * @param Tx_Fluidwidget_Bootstrap_Controller_BootstrapController $controller
+	 * @param \Tx_Fluidwidget_Controller_BootstrapController $controller
 	 */
-	public function injectController(Tx_Fluidwidget_Bootstrap_Controller_BootstrapController $controller) {
+	public function injectController(\Tx_Fluidwidget_Controller_BootstrapController $controller) {
 		$this->controller = $controller;
 	}
 

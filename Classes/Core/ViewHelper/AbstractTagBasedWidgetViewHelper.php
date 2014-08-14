@@ -1,5 +1,5 @@
 <?php
-class Tx_Fluidwidget_Core_ViewHelper_AbstractTagBasedWidgetViewHelper extends Tx_Fluid_Core_Widget_AbstractWidgetViewHelper {
+class Tx_Fluidwidget_Core_ViewHelper_AbstractTagBasedWidgetViewHelper extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper {
 
 	/**
 	 * Names of all registered tag attributes
@@ -10,7 +10,7 @@ class Tx_Fluidwidget_Core_ViewHelper_AbstractTagBasedWidgetViewHelper extends Tx
 	/**
 	 * Tag builder instance
 	 *
-	 * @var Tx_Fluid_Core_ViewHelper_TagBuilder
+	 * @var \TYPO3\CMS\Fluid\Core\ViewHelper\TagBuilder
 	 * @api
 	 */
 	protected $tag = NULL;
@@ -24,24 +24,24 @@ class Tx_Fluidwidget_Core_ViewHelper_AbstractTagBasedWidgetViewHelper extends Tx
 	protected $tagName = 'div';
 
 	/**
-	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
 	 */
 	protected $configurationManager;
 
 	/**
-	 * @param Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager
+	 * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
 	 */
-	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager) {
+	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager) {
 		$this->configurationManager = $configurationManager;
 	}
 
 	/**
 	 * Inject a TagBuilder
 	 *
-	 * @param Tx_Fluid_Core_ViewHelper_TagBuilder $tagBuilder Tag builder
+	 * @param \TYPO3\CMS\Fluid\Core\ViewHelper\TagBuilder $tagBuilder Tag builder
 	 * @return void
 	 */
-	public function injectTagBuilder(Tx_Fluid_Core_ViewHelper_TagBuilder $tagBuilder) {
+	public function injectTagBuilder(\TYPO3\CMS\Fluid\Core\ViewHelper\TagBuilder $tagBuilder) {
 		$this->tag = $tagBuilder;
 	}
 
