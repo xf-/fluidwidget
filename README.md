@@ -3,7 +3,7 @@ Fluid Widgets
 
 > Base classes and a few generic Widgets to use in Fluid templates
 
-[![Build Status](https://travis-ci.org/FluidTYPO3/fluidwidget.png?branch=master)](https://travis-ci.org/FluidTYPO3/fluidwidget)
+[![Build Status](https://img.shields.io/jenkins/s/https/jenkins.fluidtypo3.org/fluidwidget.svg?style=flat-square)](https://jenkins.fluidtypo3.org/job/fluidwidget/) [![Coverage Status](https://img.shields.io/coveralls/FluidTYPO3/fluidwidget/development.svg?style=flat-square)](https://coveralls.io/r/FluidTYPO3/fluidwidget)
 
 ## What is it?
 

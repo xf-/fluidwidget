@@ -1,9 +1,36 @@
 {
-    "name": "fluidtypo3/fluidwidget",
-    "description": "The fluidwidget package from FluidTYPO3",
-    "require": {
-        "composer/installers": "*"
+	"name": "fluidtypo3/fluidwidget",
+	"description": "The fluidwidget package from FluidTYPO3",
+	"type": "typo3-cms-extension",
+	"version": "1.1.0",
+    "require-dev": {
+        "typo3/cms": "6.2.7",
+        "fluidtypo3/development": "*"
     },
-    "type": "typo3-cms-extension",
-	"version": "1.1.0"
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "typo3/cms",
+                "version": "6.2.7",
+                "dist": {
+                    "url": "https://github.com/TYPO3/TYPO3.CMS/archive/6.2.7.zip",
+                    "type": "zip"
+                }
+            }
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "FluidTYPO3\\Fluidwidget\\Tests\\": "Tests/",
+            "FluidTYPO3\\Fluidwidget\\": "Classes/"
+        },
+        "classmap": [
+            "vendor/typo3/cms/typo3/sysext/extbase",
+            "vendor/typo3/cms/typo3/sysext/fluid",
+            "vendor/typo3/cms/typo3/sysext/core",
+            "vendor/typo3/cms/typo3/sysext/backend",
+            "vendor/typo3/cms/typo3/sysext/frontend"
+        ]
+    }
 }
