@@ -26,7 +26,9 @@ class Tx_Fluidwidget_Controller_UriController extends Tx_Fluidwidget_Core_Widget
 	public function initializeView(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view) {
 		$typoScriptSettings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		$paths = $typoScriptSettings['plugin.']['tx_fluidwidget.']['view.'];
-		$paths = Tx_Fluidwidget_Utility_Path::translatePath($paths);
+		foreach ($paths as $key => $subPath) {
+			$paths[$key] = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($subPath);
+		}
 		$view->setTemplateRootPath($paths['templateRootPath']);
 		$view->setPartialRootPath($paths['partialRootPath']);
 		$view->setLayoutRootPath($paths['layoutRootPath']);
