@@ -20,7 +20,7 @@
             }
         }
     ],
-    "autoload": {
+    "autoload-dev": {
         "psr-4": {
             "FluidTYPO3\\Fluidwidget\\Tests\\": "Tests/",
             "FluidTYPO3\\Fluidwidget\\": "Classes/"
